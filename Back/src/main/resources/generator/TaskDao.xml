@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.generate.TaskDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.generate.Task">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user1" jdbcType="VARCHAR" property="user1" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="repay" jdbcType="INTEGER" property="repay" />
+    <result column="user2" jdbcType="VARCHAR" property="user2" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="temp" jdbcType="INTEGER" property="temp" />
+    <result column="iscomplete" jdbcType="BOOLEAN" property="iscomplete" />
+    <result column="isaccepted" jdbcType="BOOLEAN" property="isaccepted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user1, title, content, repay, user2, `date`, `temp`, iscomplete, isaccepted
+  </sql>
+  <select id="temp" parameterType="java.lang.String" resultType="com.example.demo.generate.Task">
+    select * from task
+    where title = #{title,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultType="com.example.demo.generate.Task">
+    select * from task
+  </select>
+  <select id="selectMytask" parameterType="java.lang.String" resultType="com.example.demo.generate.Task">
+    select * from task
+    where user1 =  #{user1,jdbcType=VARCHAR}
+  </select>
+  <select id="get" parameterType="java.lang.String" resultType="com.example.demo.generate.Task">
+    select * from task
+    where user2 =  #{user2,jdbcType=VARCHAR}
+  </select>
+  <select id="searchTask" parameterType="java.lang.String" resultType="com.example.demo.generate.Task">
+    select  *  from task
+    where title like CONCAT('%',#{title},'%')
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.demo.generate.Task" useGeneratedKeys="true">
+    insert into task (user1, title, content, 
+      repay, user2, `date`, 
+      `temp`, iscomplete, isaccepted
+      )
+    values (#{user1,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{repay,jdbcType=INTEGER}, #{user2,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, 
+      #{temp,jdbcType=INTEGER}, #{iscomplete,jdbcType=BOOLEAN}, #{isaccepted,jdbcType=BOOLEAN}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.generate.Task" useGeneratedKeys="true">
+    insert into task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="user1 != null">
+        user1,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="repay != null">
+        repay,
+      </if>
+      <if test="user2 != null">
+        user2,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="temp != null">
+        `temp`,
+      </if>
+      <if test="iscomplete != null">
+        iscomplete,
+      </if>
+      <if test="isaccepted != null">
+        isaccepted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="user1 != null">
+        #{user1,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="repay != null">
+        #{repay,jdbcType=INTEGER},
+      </if>
+      <if test="user2 != null">
+        #{user2,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="temp != null">
+        #{temp,jdbcType=INTEGER},
+      </if>
+      <if test="iscomplete != null">
+        #{iscomplete,jdbcType=BOOLEAN},
+      </if>
+      <if test="isaccepted != null">
+        #{isaccepted,jdbcType=BOOLEAN},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.generate.Task">
+    update task
+    <set>
+      <if test="user1 != null">
+        user1 = #{user1,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="repay != null">
+        repay = #{repay,jdbcType=INTEGER},
+      </if>
+      <if test="user2 != null">
+        user2 = #{user2,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        `date` = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="temp != null">
+        `temp` = #{temp,jdbcType=INTEGER},
+      </if>
+      <if test="iscomplete != null">
+        iscomplete = #{iscomplete,jdbcType=BOOLEAN},
+      </if>
+      <if test="isaccepted != null">
+        isaccepted = #{isaccepted,jdbcType=BOOLEAN},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.generate.Task">
+    update task
+    set user1 = #{user1,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      repay = #{repay,jdbcType=INTEGER},
+      user2 = #{user2,jdbcType=VARCHAR},
+      `date` = #{date,jdbcType=VARCHAR},
+      `temp` = #{temp,jdbcType=INTEGER},
+      iscomplete = #{iscomplete,jdbcType=BOOLEAN},
+      isaccepted = #{isaccepted,jdbcType=BOOLEAN}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByTitle" parameterType="com.example.demo.generate.Task">
+    update task
+    <set>
+      <if test="user1 != null">
+        user1 = #{user1,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="repay != null">
+        repay = #{repay,jdbcType=INTEGER},
+      </if>
+      <if test="user2 != null">
+        user2 = #{user2,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        `date` = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="temp != null">
+        `temp` = #{temp,jdbcType=INTEGER},
+      </if>
+      <if test="iscomplete != null">
+        iscomplete = #{iscomplete,jdbcType=BOOLEAN},
+      </if>
+      <if test="isaccepted != null">
+        isaccepted = #{isaccepted,jdbcType=BOOLEAN},
+      </if>
+    </set>
+    where title = #{title,jdbcType=VARCHAR}
+  </update>
+</mapper>
